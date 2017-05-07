@@ -8,7 +8,7 @@ import java.sql.*;
  */
 
 public class ConnectionMySQL {
-	
+
 	private Connection connection = null;
 	private String user, host;
 
@@ -41,17 +41,11 @@ public class ConnectionMySQL {
 
 	public void connect() throws SQLException{
 		//Connexion a la base de données
-		System.out.println("Connexion à la base de données");
+		//System.out.println("Connexion à la base de données");
 
 		String dBurl = "jdbc:mysql://"+host+"/projet_autoconcept";
 		connection = DriverManager.getConnection(dBurl, user,"");
 
-		/*
-		 * Autre utilisation possible:
-			String dBurl = "jdbc:mysql://"+host+"/demojava"
-							+ "?user="+user+"&password="+password;
-			connection = DriverManager.getConnection(dBurl);				
-		 */
 
 	}
 	public ResultSet execute(String requete) throws SQLException{
@@ -63,5 +57,5 @@ public class ConnectionMySQL {
 	public void close() throws SQLException{
 		connection.close();
 	}
-	
+
 }
