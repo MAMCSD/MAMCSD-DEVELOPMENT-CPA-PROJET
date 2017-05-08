@@ -4,13 +4,11 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-import main.ConnectionMySQL;
-
 public class Recuperation {
 
-	String nom;
-	String prenom;
-	String fonction;
+	private String nom;
+	private String prenom;
+	private String fonction;
 	boolean etatConnexion= false; // etatConnexion= false equivaut à connexion non établie
 
 
@@ -46,7 +44,7 @@ public class Recuperation {
 
 				System.out.println();
 				contientDAutresDonnees = resultats.next();
-				System.out.println( "Bienvenue " + nom +" "+ prenom);
+				System.out.println( "Bienvenue " + nom +" "+ prenom );
 
 			}
 		}
@@ -63,9 +61,13 @@ public class Recuperation {
 
 	public boolean droitUtilisateur() {
 		boolean admin=false;
+		
+		System.out.println(fonction);
+			
 
-		if (fonction== "magasiniere")
+		if (fonction == "magasiniere") 
 		{
+			System.out.println("toto");
 			admin=true;
 		}
 

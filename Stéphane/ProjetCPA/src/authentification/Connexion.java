@@ -12,7 +12,7 @@ public class Connexion {
 	private Scanner scanner = new Scanner(System.in);
 
 
-
+	Recuperation atp = new Recuperation();
 	public boolean connexion() 
 	{
 		String id;
@@ -20,7 +20,8 @@ public class Connexion {
 		int demandeConnexion =0;
 		boolean etatConnexion=false;
 
-		//  exemple id="HJP"  mdp="16H11JP75" sont correct;
+		//  exemple id="HJP"  mdp="16H11JP75" sont correct et il est un utilisateur normal;
+		//  exemple id="FA"  mdp="27F02A84" sont correct et il est un admin;
 
 
 		while (demandeConnexion !=3 && etatConnexion!=true)
@@ -34,7 +35,6 @@ public class Connexion {
 				System.exit(5);
 			}
 
-			Recuperation atp = new Recuperation();
 			ConnectionMySQL connecteur = new ConnectionMySQL("127.0.0.1", "root"); // création de la connexion avec la base de donnée
 			try {
 				connecteur.connect();
@@ -44,7 +44,7 @@ public class Connexion {
 
 
 				// le select nous permet re récuperer les informations du salarié
-				ResultSet resultSet = connecteur.execute("Select salaries.Nom,salaries.Prenom,salaries.Fonction, salaries.Identifiant, authentification.Mot_de_passe  from salaries inner JOIN authentification ON salaries.Identifiant= authentification.Identifiant where salaries.Identifiant=\""+id+"\" AND authentification.Mot_de_passe=\""+mdp+"\"");
+				ResultSet resultSet = connecteur.execute("Select salaries.Nom,salaries.Prenom,salaries.Fonction from salaries inner JOIN authentification ON salaries.Identifiant= authentification.Identifiant where salaries.Identifiant=\""+id+"\" AND authentification.Mot_de_passe=\""+mdp+"\"");
 
 
 				etatConnexion=atp.verificationLogin(resultSet);
@@ -64,6 +64,14 @@ public class Connexion {
 		return etatConnexion;
 	}
 
+	public boolean retourDroitUtilisateur()
+	{
+		boolean admin= false;
+		
+		admin = atp.droitUtilisateur();
+		return admin;
+		
+	}
 
 	public String getValeur(String message){
 		System.out.println(message);
