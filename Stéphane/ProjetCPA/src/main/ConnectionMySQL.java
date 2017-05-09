@@ -40,8 +40,14 @@ public class ConnectionMySQL {
 	}
 
 	public void connect() throws SQLException{
+		
+		/**
+		 * Cette méthode nous permet de faire la connexion avec la base de données nommée "projet_autoconcept"
+		 */
+		
 		//Connexion a la base de données
 		//System.out.println("Connexion à la base de données");
+
 
 		String dBurl = "jdbc:mysql://"+host+"/projet_autoconcept";
 		connection = DriverManager.getConnection(dBurl, user,"");
@@ -49,12 +55,21 @@ public class ConnectionMySQL {
 
 	}
 	public ResultSet execute(String requete) throws SQLException{
+		
+		/**
+		 * Cette méthode nous permet d'exécuter des requêtes SQL dans la base de données.
+		 */
+		
 		//System.out.println("creation et execution de la requête :"+requete);
+		
 		Statement stmt = connection.createStatement();
 		return stmt.executeQuery(requete);
 	}
 
 	public void close() throws SQLException{
+		/**
+		 * Cette méthode nous permet de fermer la connexion avec la base de données.
+		 */
 		connection.close();
 	}
 

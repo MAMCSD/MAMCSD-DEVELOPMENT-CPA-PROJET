@@ -1,11 +1,15 @@
 package authentification;
 
 import java.util.Scanner;
-
 import main.ConnectionMySQL;
-
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.SQLException; 
+
+/**
+ * 
+ * @author Stéphane
+ *	Cette classe permet de mettre en place la connexion de l'utilisateur en mode console
+ */
 
 public class Connexion {
 
@@ -15,6 +19,14 @@ public class Connexion {
 	Recuperation atp = new Recuperation();
 	public boolean connexion() 
 	{
+		/**
+		 * Cette méthode permet de créer la connexion de l'utilisateur.
+		 * C'est dans celle-ci que nous comparons les logins choisis par l'utilisateur avec les logins présents dans la base de données.
+		 *
+		 *par exemple pour un utilisateur normal on peut utiliser les logins suivants : id ="HJP" et mdp = " 16H11JP75"
+		 *et pour un admin voici les logins : id = "FA" et mdp = " 27F02A84"
+		 *
+		 */
 		String id;
 		String mdp;
 		int demandeConnexion =0;
@@ -56,7 +68,7 @@ public class Connexion {
 				connecteur.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
+			}     
 			demandeConnexion++;
 
 		}
@@ -66,6 +78,9 @@ public class Connexion {
 
 	public boolean retourDroitUtilisateur()
 	{
+		/**
+		 * Cette méthode permet de retourner les droits de l'utilisateur qui vient de se connecter.
+		 */
 		boolean admin= false;
 		
 		admin = atp.droitUtilisateur();
@@ -74,7 +89,18 @@ public class Connexion {
 	}
 
 	public String getValeur(String message){
+		/**
+		 * Cette méthode permet de retourner une valeur (String)  entrée par l'utilisateur au clavier.
+		 */
 		System.out.println(message);
 		return  scanner.next();
 	} 
+	public int getChoix(String message)
+	{
+		/**
+		 * Cette méthode permet de retourner le choix de l'utilisateur lors de sa présence dans les menus.
+		 */
+		System.out.println(message);
+		return  scanner.nextInt();		
+	}
 }
