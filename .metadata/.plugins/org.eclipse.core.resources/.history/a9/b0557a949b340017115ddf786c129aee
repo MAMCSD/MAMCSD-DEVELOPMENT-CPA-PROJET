@@ -1,0 +1,47 @@
+package importation;
+import java.io.*;
+
+public class ImportCsv {
+	
+	public static void main(String[] args) {
+		
+		ImportCsv icsv = new ImportCsv();
+		icsv.ouvertureFichier("source");
+		
+	}
+	
+	public File ouvertureFichier(String fichier){
+		File f;
+		int byteLu;
+		
+		try{
+			//creation d'un flux d'entrée ayant pour source un fichier nommé 			
+			//source,cette instanciation peut lever une exception de type 				
+			//FileNotFound
+			f=new File("source");
+			//la methode read() renvoie un int representant l'octet lu, la valeur (-1) 			
+			//represente la fin du fichier.
+			// read peut lever une exception du type IOException
+			
+			}
+			//Ne pas oublier de fermer le flux afin de liberer les ressources qu'il 			
+			//utilise
+			finally{
+				return f;
+			}
+		}
+		catch(FileNotFoundException ef){
+			System.out.println("fichier introuvable");
+		}
+		catch(IOException e){
+			System.out.println(e+"erreur lors de la lecture du fichier");
+		}
+	
+		//return fis;
+	}
+		
+		
+	
+		
+	
+}

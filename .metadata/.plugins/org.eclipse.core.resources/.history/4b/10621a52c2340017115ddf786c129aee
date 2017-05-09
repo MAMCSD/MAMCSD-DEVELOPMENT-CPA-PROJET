@@ -1,0 +1,148 @@
+package importation;
+import java.io.*;
+import java.util.Scanner;
+
+
+
+import java.sql.*;
+import main.ConnectionMySQL;
+
+
+public class ImportCsv {
+	
+	Scanner scan=new Scanner(System.in);
+	//ConnectionMySQL connexion = new ConnectionMySQL();
+	//ConnectionMySQL connecteur = new ConnectionMySQL("127.0.0.1", "root"); 
+	
+	
+	public static void main(String[] args) {
+		
+		ImportCsv icsv = new ImportCsv();
+		File fichier=icsv.ouvertureFichier();
+		
+		
+		icsv.lectureFichier(fichier);
+		icsv.affichageCsv(fichier);
+		icsv.importCsv(fichier);
+		
+		//String contenuFichier=icsv.lectureFichier("source");
+		//icsv.decoupageCsv(contenuFichier);
+		
+	}
+	
+	public File ouvertureFichier(){
+		File fichier;
+		String chemin;
+		
+		
+		System.out.println("Veuilles entrer le chemin et le nom du fichier à importer");
+		chemin=scan.nextLine();
+		fichier=new File(chemin);
+		
+		
+		
+		
+		return fichier;
+	}
+	
+	public String lectureFichier(File fichier){
+		int i;
+		//int j=0;
+		String contenuFichier="";
+		
+		try{
+			
+			FileReader fr=new FileReader (fichier);
+			
+			try{
+				while((i=fr.read())!=-1){ 
+					
+					contenuFichier+=((char)i);
+					//j++;
+				}
+				//System.out.println("Contenu"+contenuFichier);
+			}
+			
+			finally{
+				fr.close();
+			}
+		}
+		catch(FileNotFoundException ef){
+			System.out.println("fichier introuvable");
+		}
+		catch(IOException e){
+			System.out.println(e+"erreur lors de la lecture du fichier");
+		}
+	
+		return contenuFichier;
+	}
+		
+		public void decoupageCsv(String contenu){
+			
+			System.out.println(contenu);
+			
+		}
+		
+		public void affichageCsv(File fichier){
+			BufferedReader br=null;
+			String ligne="";
+			
+			try{
+				br=new BufferedReader(new FileReader(fichier));
+				while((ligne=br.readLine()) != null){
+					String[] cellules = ligne.split(",");
+					int i=cellules.length;
+					System.out.println(i);
+				}
+			}
+			catch(FileNotFoundException e){
+				e.printStackTrace();
+			}
+			catch (IOException o){
+				o.printStackTrace();
+			}
+			finally{
+				if (br !=null){
+					try{
+						br.close();
+					}
+					catch(IOException o){
+						o.printStackTrace();
+					}
+				}
+				
+			}
+		}
+		
+		public void importCsv(File fichier){
+			try {
+				ConnectionMySQL.init();
+			} catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Erreur Driver");
+			}
+			
+			ConnectionMySQL connexion= new ConnectionMySQL("127.0.0.1", "root");
+			try {
+				connexion.connect();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				System.out.println("Erreur Connexion");
+			}
+			
+			try {
+				connexion.execute("SELECT * FROM commandes");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Erreur d'execution de la requete");
+			}
+			System.out.println("OK");
+			
+		}
+	
+		
+	
+}
