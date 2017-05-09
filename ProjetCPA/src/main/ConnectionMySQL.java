@@ -34,8 +34,8 @@ public class ConnectionMySQL {
 
 	public ConnectionMySQL(String host, String user) {
 		this();
-		this.host = host;
-		this.user = user;
+		this.host = "127.0.0.1";
+		this.user = "root";
 
 	}
 
@@ -43,8 +43,8 @@ public class ConnectionMySQL {
 		//Connexion a la base de données
 		//System.out.println("Connexion à la base de données");
 
-		String dBurl = "jdbc:mysql://"+host+"/projet_autoconcept";
-		connection = DriverManager.getConnection(dBurl, user,"");
+		String dBurl = "jdbc:mysql://"+host+"/auto_concept";
+		connection = DriverManager.getConnection(dBurl, user,"admin");
 
 
 	}

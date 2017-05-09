@@ -1,0 +1,54 @@
+package importation;
+import java.io.*;
+
+public class ImportCsv {
+	
+	public static void main(String[] args) {
+		
+		ImportCsv icsv = new ImportCsv();
+		String contenuFichier=icsv.lectureFichier("source");
+		icsv.decoupageCsv(contenuFichier);
+		
+	}
+	
+	public String lectureFichier(String fichier){
+		int i;
+		//int j=0;
+		String contenuFichier="";
+		
+		try{
+			
+			FileReader fr=new FileReader (fichier);
+			
+			try{
+				while((i=fr.read())!=-1){ 
+					
+					contenuFichier+=((char)i);
+					//j++;
+				}
+				//System.out.println("Contenu"+contenuFichier);
+			}
+			
+			finally{
+				fr.close();
+			}
+		}
+		catch(FileNotFoundException ef){
+			System.out.println("fichier introuvable");
+		}
+		catch(IOException e){
+			System.out.println(e+"erreur lors de la lecture du fichier");
+		}
+	
+		return contenuFichier;
+	}
+		
+		public void decoupageCsv(String contenu){
+			
+			System.out.println(contenu);
+			
+		}
+	
+		
+	
+}

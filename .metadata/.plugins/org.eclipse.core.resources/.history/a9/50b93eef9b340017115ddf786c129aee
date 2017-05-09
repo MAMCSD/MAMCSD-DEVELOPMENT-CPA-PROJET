@@ -1,0 +1,44 @@
+package importation;
+import java.io.*;
+
+public class ImportCsv {
+	
+	public static void main(String[] args) {
+		
+		ImportCsv icsv = new ImportCsv();
+		icsv.lectureFichier("source");
+		
+	}
+	
+	public void lectureFichier(String fichier){
+		int i;
+		
+		try{
+			
+			FileReader fr=new FileReader (fichier);
+			
+			try{
+				while((i=fr.read())!=-1){  
+					System.out.println((char)i);
+				}
+			}
+			
+			finally{
+				fr.close();
+			}
+		}
+		catch(FileNotFoundException ef){
+			System.out.println("fichier introuvable");
+		}
+		catch(IOException e){
+			System.out.println(e+"erreur lors de la lecture du fichier");
+		}
+	
+		//return fis;
+	}
+		
+		
+	
+		
+	
+}
