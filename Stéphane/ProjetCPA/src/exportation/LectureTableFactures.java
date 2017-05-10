@@ -8,9 +8,22 @@ import java.sql.SQLException;
 
 import main.ConnectionMySQL;
 
+/**
+ * 
+ * @author Stéphane
+ *  Cette classe va nous permettre de faire l'exportation de la table des factures.
+ */
+
 public class LectureTableFactures {
+	
+
+	private StringBuffer buffer = new StringBuffer(128);
 
 	public void afficherDonnees(ResultSet resultats) throws SQLException{
+		
+		/**
+		 * Dans cette méthode nous faisons la lecture des informations récupérées dans la base de données et nous formons notre chaine de sortie à l'aide d'un buffer.
+		 */
 		System.out.println("Parcours des donnees retournees");
 		ResultSetMetaData rsmd = resultats.getMetaData();
 		int nbCols = rsmd.getColumnCount();
@@ -19,27 +32,40 @@ public class LectureTableFactures {
 		for (int i = 1; i <= nbCols; i++) {
 			if(i > 1) {
 				System.out.print( " | ");
+				buffer.append(" ; ");
 			}
 			System.out.print(rsmd.getColumnLabel(i));
+			buffer.append(rsmd.getColumnLabel(i));
+			
 		}
 		System.out.println();
-
+		buffer.append(" \r\n ");
 		while (contientDAutresDonnees) {
 			for (int i = 1; i <= nbCols; i++){
 				if(i > 1) {
 					System.out.print( " | ");
+					buffer.append(" ; ");
 				}
 				System.out.print(resultats.getString(i));
+				buffer.append(resultats.getString(i));
 			}
 			System.out.println();
+			buffer.append(" \r\n ");
 			contientDAutresDonnees = resultats.next();
 		}
-		exportation();
-
+		
+		System.out.println();
+		System.out.println("essai buffer");
+		System.out.println(buffer);
+		System.out.println();
+		
 		resultats.close();
 	}
 	public void AfficherTableFactures() {
 
+		/**
+		 * Dans cette méthode nous gérons la connexion avec la base de données et nous lançons la requête pour récupérer les informations et ensuite celles-ci sont transformées.
+		 */
 		ConnectionMySQL connecteur = new ConnectionMySQL("127.0.0.1", "root");
 		try {
 			connecteur.connect();
@@ -47,6 +73,7 @@ public class LectureTableFactures {
 			ResultSet resultSet = connecteur.execute("SELECT * FROM factures");
 
 			afficherDonnees(resultSet);
+			exportation();
 
 			//Bonne pratique: fermer votre résultat
 			resultSet.close();
@@ -64,40 +91,39 @@ public class LectureTableFactures {
 		}
 
 	}
-	public void exportation () {
+	public void exportation ()  {
 
-		try { 
-			ConnectionMySQL connecteur = new ConnectionMySQL("127.0.0.1", "root");
-			connecteur.connect();
-			ResultSet resultSet = connecteur.execute("SELECT * FROM factures");
-			try{ 
-				//PrintStream ps = new PrintStream(System.out);
-				PrintStream out = new PrintStream(new FileOutputStream("Test.csv"));
+		/**
+		 * Dans cette méthode nous gérons l'aspect écriture dans un fichier de sortie à l'aide d'un bufferedWriter.
+		 */
+		//lecture et copie des données
+
+			BufferedWriter writer = null;
+			
+			try{
 				
-				//ps.println(resultSet);
-			    //ps.print("New Line");
+				writer = new BufferedWriter(new FileWriter("factures.csv"));
 
-			      // flush the stream
-			      //ps.flush();
-				while(resultSet.next()) 
-				{ //ici j'aimerais pouvoir insérer le résultat de ma requête avec des ; comme délimiteur 
-					//Writer.print(resultSet.getInt("ID_Facture"));
-					//writer.print(";");
-					//writer.print(resultSet.getString("nom"));
-					//writer.print(";");
-					//writer.println(resultSet.getString("prenom"));
+				writer.write(buffer.toString());
+
+
+				writer.flush(); //vider le buffer
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			finally
+			{
+				//fermeture de out
+				try {
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 
-			} catch (Exception e) {
-				e.printStackTrace();
+			}
+		
 
-			}    
-
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}finally{
-
-		}
 	}
+
 }
