@@ -3,6 +3,8 @@ package main;
 import java.io.File;
 import java.util.Scanner;
 import importation.ImportCsv;
+import exportation.LectureTableFactures;
+import exportation.ExportationTableSalaries;
 
 /**
  * 
@@ -47,6 +49,11 @@ public class Action {
 	public static final int CHOIX_GERER_LITIGES= 8;
 	public static final int CHOIX_GERER_DOCUMENTATIONS= 9;
 	public static final int CHOIX_RETOUR_MENU_PRINCIPAL_DEPUIS_GESTION= 10;
+	
+	
+	public static final int CHOIX_EXPORTER_TABLE_FACTURES= 1;
+	public static final int CHOIX_EXPORTER_TABLE_SALARIES= 2;
+	public static final int CHOIX_RETOUR_MENU_EXPORT= 3;
 	
 
 	
@@ -241,6 +248,10 @@ public class Action {
 		 * Ils pourront par exemple exporter entièrement la base de données, exporter une partie de la base de données ou encore retourner au menu principal.
 		 * 
 		 */
+		
+		Menu menuSecondaireExportation = new Menu();
+		int choixMenuSecondaireExportation=0;
+		
 		switch(choix)
 		{	
 			case CHOIX_EXPORTER_BASE_COMPLETE:
@@ -252,6 +263,14 @@ public class Action {
 			case CHOIX_EXPORTER_PARTIE_BASE:
 			{
 				System.out.println(" \n Exportation d'une partie de la base \n");
+				
+				while (choixMenuSecondaireExportation!=3)
+				{
+				menuSecondaireExportation.menuExportationPartieBdd();
+				choixMenuSecondaireExportation=getChoix(" \n Entrer votre choix: ");
+				actionMenuSecondaireExportation(choixMenuSecondaireExportation);
+				}
+				
 			}
 			break;
 			case CHOIX_RETOUR_MENU_PRINCIPAL_DEPUIS_EXPORT:
@@ -264,6 +283,40 @@ public class Action {
 				System.out.println(" \n Choix impossible \n");
 			}
 		}
+	}
+	
+	public void actionMenuSecondaireExportation( int choix)
+	{
+		switch(choix)
+		{
+			case  CHOIX_EXPORTER_TABLE_FACTURES:
+			{				
+				System.out.println(" \n Exportation de la table des factures \n");
+				LectureTableFactures lec = new LectureTableFactures();
+				lec.AfficherTableFactures();
+				System.out.println();
+			}
+			break;
+			case CHOIX_EXPORTER_TABLE_SALARIES:
+			{
+				System.out.println(" \n Exportation de la table des salariés \n");
+
+				ExportationTableSalaries exportTabSalaries = new ExportationTableSalaries();
+				exportTabSalaries.exportationListeSalaries();
+				
+			}
+			break;
+			case  CHOIX_RETOUR_MENU_EXPORT:
+			{
+				System.out.println(" \n Retour au menu exportation \n");
+			}
+			break;	
+			default:
+			{
+				System.out.println(" \n Choix impossible \n");
+			}
+		}
+			
 	}
 	
 	public void actionMenuGestion(int choix)

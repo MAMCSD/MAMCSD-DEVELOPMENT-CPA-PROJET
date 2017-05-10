@@ -57,7 +57,6 @@ public class LectureTableFactures {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.exit(0);
 		try {
 			ConnectionMySQL.init();			
 		} catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {

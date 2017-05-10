@@ -50,6 +50,14 @@ public class Menu {
 		System.out.println("3- Retourner au menu principal");
 	}
 
+	public void menuExportationPartieBdd()
+	{
+		System.out.println("Que souhaitez vous faire :");
+		System.out.println("1- Exporter/sauvegarder la table des factures");
+		System.out.println("2- Exporter/sauvegarder la table des salariés");
+		System.out.println("3- Retourner au menu exportation");
+	}
+	
 	public void menuGestion()
 	{
 		System.out.println("Que souhaitez vous faire :");
