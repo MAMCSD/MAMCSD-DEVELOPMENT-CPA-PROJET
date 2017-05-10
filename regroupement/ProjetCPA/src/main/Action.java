@@ -287,6 +287,11 @@ public class Action {
 	
 	public void actionMenuSecondaireExportation( int choix)
 	{
+		/**
+		 * Cette méthode correspond aux actions pouvant être faite par les utilisateurs lorsqu'ils ont choisi le mode d'exportation d'une partie de la base de données.
+		 * Ils pourront par exemple exporter la table des factures , exporter la table des salariés ou encore retourner au menu d'exportation.
+		 * 
+		 */
 		switch(choix)
 		{
 			case  CHOIX_EXPORTER_TABLE_FACTURES:

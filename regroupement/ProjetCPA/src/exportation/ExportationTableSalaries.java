@@ -5,6 +5,12 @@ import java.sql.SQLException;
 
 import main.ConnectionMySQL;
 
+/**
+ * 
+ * @author Stéphane
+ * Cette classe permet de gérer l'exportation de la table des salariés à l'aide d'une commande sql.
+ * 
+ */
 public class ExportationTableSalaries {
 	
 	public void exportationListeSalaries()
@@ -21,7 +27,7 @@ public class ExportationTableSalaries {
 			connecteur.connect();
 
 
-			// le select nous permet re récuperer les informations du salarié
+			// le select nous permet de faire l'exportation des informations contenues dans la table des salariés et crée un fichier csv localisé en  C:\xampp\mysql\data\projet_autoconcept
 			ResultSet resultSet = connecteur.execute("SELECT * INTO OUTFILE 'salaries.csv' FIELDS terminated BY ';' LINES terminated BY '\r\n' FROM (SELECT 'ID_Salarie','Nom','Prenom','Date_de_naissance','Sexe','Anciennete','Nom_de_service','Fonction','Identifiant' UNION SELECT * FROM salaries) tmp");
 
 
