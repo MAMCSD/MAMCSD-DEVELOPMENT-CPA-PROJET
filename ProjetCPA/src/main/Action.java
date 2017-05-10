@@ -1,6 +1,8 @@
 package main;
 
+import java.io.File;
 import java.util.Scanner;
+import importation.ImportCsv;
 
 /**
  * 
@@ -204,6 +206,11 @@ public class Action {
 			{
 
 				System.out.println(" \n Importation depuis un fichier Excel \n");
+				ImportCsv icsv = new ImportCsv();
+				File fichier=icsv.ouvertureFichier();
+				icsv.lectureFichier(fichier);
+				icsv.affichageCsv(fichier);
+				icsv.importCsv(fichier);
 
 			}
 			break;
